@@ -1,0 +1,15 @@
+#ifndef STATION_H
+#define STATION_H
+
+#define BUF_SIZE 1024
+
+struct SStation {
+    int id;
+    char *name;
+};
+typedef struct SStation* Station;
+
+void afficher(Station s);
+Station *init_station(char *file_name, int *nb_stations);
+
+#endif 

@@ -1,37 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define BUF_SIZE 1024
-
-struct SStation {
-    int id;
-    char *name;
-};
-typedef struct SStation* Station;
-
-void afficher(Station s);
-Station *init_station(char *file_name, int *nb_stations);
-
-int main(int argc, char *argv[]) {
-
-    if (argc != 2) {
-        fprintf(stderr, "Fichier : %s \n", argv[0]);
-        return 1;
-    }
-
-    int nb_stations = 0;
-    Station *stations = init_station(argv[1], &nb_stations);
-
-    for (int i = 0; i < nb_stations; i++) afficher(stations[i]);;
-    
-
-    for (int i = 0; i < nb_stations; i++) {
-        free(stations[i]->name);
-        free(stations[i]);
-    }
-    free(stations); 
-}
+#include "../include/station.h"
 
 
 void afficher(Station s) {
@@ -44,7 +14,7 @@ Station *init_station(char *file_name, int *nb_stations) {
 
     FILE *f = fopen(file_name, "r");
     if (!f) {
-        perror("Erreur d'ouverture du fichier");
+        printf("Erreur d'ouverture du fichier");
         return NULL;
     }
 
