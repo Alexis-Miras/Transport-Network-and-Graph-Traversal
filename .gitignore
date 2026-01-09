@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Fichiers temporaires
+*.log
+*.tmp
+*.swp
+*.bak
+*.old
+
+# Dossiers de build / génération
+build/
+dist/
+out/
+
+# IDEs / éditeurs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dépendances et paquets
+node_modules/
+vendor/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Environnement
+.env
