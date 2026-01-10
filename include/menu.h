@@ -4,6 +4,7 @@
 #include "../include/graphe.h"
 
 int menu(void);
-void affichage_station(Station, Station*, int, Graphe);
+void affichage_menu(int, int, Station *, Graphe);
+void affichage_station(Station, int, Graphe, int);
 
 #endif

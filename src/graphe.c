@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../include/graphe.h"
 #include "../include/station.h"
+#include <string.h> 
 
 Graphe init_graphe(Station *stations, int nb_stations){ 
     Graphe g = malloc(sizeof(struct SGraphe)); 
@@ -34,3 +35,37 @@ void free_graphe(Graphe g){
     free(g->list_adj); 
     free(g); //on libère le graphe
 } 
+
+
+void lire_edges(Graphe g, char *file_name) {
+    FILE *f = fopen(file_name, "r");
+    if (!f) {
+        printf("Erreur d'ouverture du fichier %s\n", file_name);
+        return;
+    }
+
+    char line[BUF_SIZE];
+    while (fgets(line, BUF_SIZE, f)) {
+        if (strncmp(line, "EDGE", 4) == 0) {
+            char *s = strtok(line, ";"); // pour EDGE
+            s = strtok(NULL, ";");
+            char *d = strtok(NULL, ";");
+            char *t = strtok(NULL, "\n");
+
+            
+            if (s && d && t) {
+                int srce = atoi(s);
+                int destin = atoi(d);
+                int temps = atoi(t);
+
+                
+                if (srce >= 0 && srce < g->nb_stations &&
+                    destin >= 0 && destin < g->nb_stations) {
+                    graphe_add_arc(g, srce, destin, temps);
+                }
+            }
+        }
+    }
+
+    fclose(f);
+}

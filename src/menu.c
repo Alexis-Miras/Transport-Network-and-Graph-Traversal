@@ -3,6 +3,11 @@
 #include <string.h>
 #include "../include/station.h"
 #include "../include/graphe.h"
+#include "../include/hash.h"
+#include "../include/tri.h"
+
+void affichage_station(Station, int, Graphe, int);
+void affichage_menu(int, int, Station *, Graphe);
 
 int menu() {
     int choice;
@@ -36,38 +41,122 @@ int menu() {
     }
 }
 
-void affichage_station(Station station, Station* stations, int nb_station, Graphe g) {
-    int find = 0;
-    if (station->id != -1) {
-        for (int i = 0; i < nb_station; i++) {
-            if (station->id == stations[i]->id) {
-                station->name = malloc(strlen(stations[i]->name) + 1);
-                strcpy(station->name, stations[i]->name);
-                station->name = stations[i]->name;
-                find = 1;
+void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph) {
+    char *input = malloc(sizeof(char)*256);
+    int id;
+    int idx = -1;
+    switch (choix) {
+        case 0:
+            break;
+        case 1:
+            printf("Entrez un nom ou un id de station :\n");
+            fgets(input, 256, stdin);
+            input[strcspn(input, "\n")] = 0; // retirer \n et \r
+            printf("%s", input);
+
+            // Station search = NULL;// (Station) malloc(sizeof(struct SStation));
+
+            // search->id = -1; search->name = NULL;
+            if (sscanf(input, "%i", &id) == 1) {
+                idx = id;
+            } else {
+                idx = search_hash(input);
+            }
+
+            if (idx == -1) {
+                printf("Nom ou ID invalide\n");
                 break;
             }
-        }
-    } else if (station->name != NULL) {
-        for (int i = 0; i < nb_station; i++) {
-            if (!strcmp(station->name, stations[i]->name)) {
-                station->id = stations[i]->id;
-                find = 1;
+
+            // search = NULL;
+            int found_idx = -1;
+            for (int i = 0; i < nb_stations; i++) {
+                if (stations[i]->id == idx) {
+                    found_idx = i; // IMPORTANT : idx devient l’index réel
+                    break;
+                }
+            }
+
+            if (found_idx == -1) {
+                printf("Station introuvable\n");
                 break;
             }
-        }
+
+            affichage_station(stations[found_idx], nb_stations, graph, found_idx);
+            break;
+        case 2:
+            printf("Lister voisins station\n");
+            printf("Entrez un nom ou un id de station :\n");
+            fgets(input, 256, stdin);
+            input[strcspn(input, "\n")] = 0; // enlever le '\n'
+
+            if (sscanf(input, "%i", &id) == 1) {
+                idx = id;
+            } else {
+                idx = search_hash(input);
+            }
+
+            if (idx != -1) {
+                Arc a = graph->list_adj[id];
+                printf("Voisins de %s :\n", stations[id]->name);
+                while (a) {
+                    printf("  %d - %s (temps: %d)\n", a->destination,
+                    stations[a->destination]->name, a->temps);
+                a = a->next_destination;
+                }
+            }
+            break;
+        case 3:
+            printf("Chemin minimal\n");
+            break;
+        case 4:
+            printf("Stations triées par degré\n");
+            DegreDesStations *tableau = malloc(nb_stations * sizeof(DegreDesStations));
+            if (!tableau) {
+                printf("Erreur allocation mémoire\n");
+                break;
+            }
+
+            for (int i = 0; i < nb_stations; i++) {
+                tableau[i] = malloc(sizeof(struct SDegreDesStations));
+                if (!tableau[i]) {
+                    printf("Erreur allocation mémoire\n");
+                    break;
+                }
+            }
+
+            calcul_du_degre(graph, tableau);
+
+            int comparaisons = 0, permutations = 0;
+            tri_par_selection(nb_stations, tableau, &comparaisons, &permutations);
+
+            for (int i = 0; i < nb_stations; i++) {
+                int idx = tableau[i]->id_station;
+                printf("%s (degré = %i)\n",
+                    stations[idx]->name,
+                    tableau[i]->degre);
+            }
+
+            afficher_stats(comparaisons, permutations);
+            for (int i = 0; i < nb_stations; i++)free(tableau[i]);
+            free(tableau);
+            break;
+        default:
+            printf("Choix invalide\n");
     }
-    if (!find) printf("Nom ou ID invalide \n");
-    else {
-        afficher(station);
-        int deg = 0;
-        Arc arc = g->list_adj[station->id];
-        while (arc != NULL) {
-            deg++;
-            arc = arc->next_destination;
-        }
-        printf("Nombre de voisins sortants : %i \n", deg);
+    free(input);
+}
+
+void affichage_station(Station station, int nb_station, Graphe g, int idx) {
+    if (!station) return;
+
+    afficher(station);
+
+    int deg = 0;
+    Arc arc = g->list_adj[idx];
+    while (arc != NULL) {
+        deg++;
+        arc = arc->next_destination;
     }
-    if (station->name != NULL) free(station->name);
-    
+    printf("Nombre de voisins sortants : %i \n", deg);
 }
