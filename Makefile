@@ -3,7 +3,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 
-OBJ = src/main.o src/station.o src/graphe.o src/menu.o
+OBJ = src/main.o src/station.o src/graphe.o src/menu.o src/hash.o src/dijkstra.o src/tri.o
 
 metro: $(OBJ)
 	$(CC) $(OBJ) -o metro
