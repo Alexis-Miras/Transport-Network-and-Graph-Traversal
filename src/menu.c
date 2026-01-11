@@ -5,6 +5,7 @@
 #include "../include/graphe.h"
 #include "../include/hash.h"
 #include "../include/tri.h"
+#include "../include/dijkstra.h"
 
 void affichage_station(Station, int, Graphe, int);
 void affichage_menu(int, int, Station *, Graphe);
@@ -108,6 +109,40 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             break;
         case 3:
             printf("Chemin minimal\n");
+            char input1[256], input2[256];
+            int depart, arrivee;
+            SDijkstra *resultat = malloc(nb_stations * sizeof(SDijkstra));
+            if (!resultat) {
+                printf("Erreur allocation mémoire\n");
+                break;
+            }
+
+            printf("Station de départ (nom ou id) :\n");
+            fgets(input1, 256, stdin);
+            input1[strcspn(input1, "\n")] = 0;
+
+            printf("Station d'arrivée (nom ou id) :\n");
+            fgets(input2, 256, stdin);
+            input2[strcspn(input2, "\n")] = 0;
+
+            if (sscanf(input1, "%d", &depart) != 1) depart = search_hash(input1);
+
+            if (sscanf(input2, "%d", &arrivee) != 1) arrivee = search_hash(input2);
+
+            if (depart == -1 || arrivee == -1) {
+                printf("Station invalide.\n");
+                free(resultat);
+                break;
+            }
+
+            dijkstra(graph, depart, resultat);
+
+            afficher_chemin(depart, arrivee, resultat, stations);
+
+
+            for (int i = 0; i < nb_stations; i++) free(resultat[i]);
+            free(resultat);
+
             break;
         case 4:
             printf("Stations triées par degré\n");
