@@ -56,9 +56,9 @@ void print_hash_table() {
     for (int i = 0; i < TABLE_SIZE; i++) {
         HashMap node = hash_table[i];
         if (node) {
-            printf("Bucket %d:\n", i);
+            printf("Bucket %i:\n", i);
             while (node) {
-                printf("  name='%s', id=%d\n", node->name, node->id);
+                printf("  name='%s', id=%i\n", node->name, node->id);
                 node = node->next;
             }
         }

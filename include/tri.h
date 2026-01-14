@@ -1,3 +1,6 @@
+#ifndef TRI_H
+#define TRI_H
+
 #include "graphe.h"
 
 struct SDegreDesStations { //structure pour stocker le couple (id_station, degre)
@@ -16,3 +19,5 @@ void tri_rapide(int nb, DegreDesStations* tableau, int *comparaisons, int *permu
 void tri_rapide_rec(DegreDesStations *, int, int, int *, int *);
 int partition(DegreDesStations *, int, int, int *, int *);
 void afficher_stats(int, int);
+
+#endif

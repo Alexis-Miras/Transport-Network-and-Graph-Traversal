@@ -4,7 +4,6 @@
 #include "../include/menu.h"
 #include "../include/graphe.h"
 #include "../include/hash.h"
-#include "../include/hash.h"
 #include <string.h>
 
 
@@ -22,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     lire_edges(graph, argv[1]);
 
-    // Initialiser la hash map
+    // Initialisation de la hash map
     init_hash();
     for (int i = 0; i < nb_stations; i++) {
         stations[i]->name[strcspn(stations[i]->name, "\n")] = 0;
@@ -33,6 +32,7 @@ int main(int argc, char *argv[]) {
     
     // for (int i = 0; i < nb_stations; i++) afficher(stations[i]);;
 
+    // Boucle infini sur le menu jusqu'au choix 0 (quitter)
     int choix = -1;
     while (choix != 0) {
         choix = menu();

@@ -179,7 +179,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
         default:
             printf("Choix invalide\n");
     }
-    free(input);
+    if (input) free(input);
 }
 
 void affichage_station(Station station, int nb_station, Graphe g, int idx) {
