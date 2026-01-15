@@ -28,6 +28,8 @@ void swap_deg(DegreDesStations *a, DegreDesStations *b, int *permutations) {
 
 
 void tri_par_selection(int nb, DegreDesStations* tableau, int *comparaisons, int *permutations){
+    (void)comparaisons; // warning
+
     for (int i = 0; i < nb-1; i++) {
         int min = i;
         for (int j = i + 1; j < nb; j++) {
@@ -57,7 +59,7 @@ int partition(DegreDesStations *tableau, int l, int r, int *comparaisons, int *p
     int pivot = tableau[r]->degre;
     int idx = l;
     for (int i = l; i < r; i++) {
-        if (tableau[i] < pivot) {
+        if (tableau[i]->degre < pivot) {
             (*comparaisons)++;
             swap_deg(&tableau[i], &tableau[idx], permutations);
             idx++;

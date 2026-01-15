@@ -10,9 +10,11 @@
 int main(int argc, char *argv[]) {
 
     if (argc != 2) {
-        fprintf(stderr, "Fichier : %s \n", argv[0]);
-        return 1;
+        printf("Erreur : impossible d'ouvrir le fichier : %s \n", argv[0]);
+        return -1;
     }
+
+    init_hash();
 
     int nb_stations = 0;
     Station *stations = init_station(argv[1], &nb_stations);
@@ -22,11 +24,12 @@ int main(int argc, char *argv[]) {
     lire_edges(graph, argv[1]);
 
     // Initialisation de la hash map
-    init_hash();
+    /*
     for (int i = 0; i < nb_stations; i++) {
         stations[i]->name[strcspn(stations[i]->name, "\n")] = 0;
         insert_hash(stations[i]->name, i);
     }
+    */
     // print_hash_table();
 
     

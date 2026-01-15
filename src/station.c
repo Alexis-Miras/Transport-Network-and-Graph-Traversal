@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/station.h"
+#include "../include/hash.h"
 
 
 void afficher(Station s) {
@@ -29,34 +30,55 @@ Station *init_station(char *file_name, int *nb_stations) {
 
     while (fgets(line, BUF_SIZE, f)) {
         if (strncmp(line, "STATION", 7) == 0) {
-            char *token = strtok(line, ";");
-            token = strtok(NULL, ";");
-            if (token && strlen(token) > 0) (*nb_stations)++;
+
+            strtok(line, ";");
+            char *id = strtok(NULL, ";");
+            char *name = strtok(NULL, "\n");
+
+            if (!id || strlen(id) == 0 || !name || strlen(name) == 0) {
+                fprintf(stderr, "Erreur format STATION ligne %i\n", (*nb_stations)+1);
+                continue; // ignorer
+            }
+            (*nb_stations)++;
         }
     }
 
     Station *stations = malloc((*nb_stations)*sizeof(Station));
+    if (!stations) {
+        fclose(f);
+        return NULL;
+    }
 
     rewind(f);
 
-    int count = 0;
+    int index = 0;
     while (fgets(line, BUF_SIZE, f)) {
+        if (line[0] == '#' || strlen(line) <= 1) continue;
         if (strncmp(line, "STATION", 7) == 0) {
-
-            char *type = strtok(line, ";");
+            strtok(line, ";");
             char *id = strtok(NULL, ";");
             char *name = strtok(NULL, "\n");
 
-            // if (count >= *nb_stations) break;
-            stations[count] = malloc(sizeof(struct SStation));
 
-            if (id && strlen(id) > 0) stations[count]->id = atoi(id);
-            else continue;
+            if (!id || strlen(id) == 0 || !name || strlen(name) == 0) {
+                printf("Erreur format STATION ligne %i\n", index+1);
+                continue;
+            }
 
-            if (name) stations[count]->name = strdup(name);
-            else stations[count]->name = strdup("");
+            int existing_index = search_hash(id);
+            if (existing_index != -1) {
+                printf("Doublon ID station %i à la ligne %i, nom remplacé\n", atoi(id), index+1);
+                free(stations[existing_index]->name);
+                stations[existing_index]->name = strdup(name);
+                continue;
+            }
 
-            count++;
+            stations[index] = malloc(sizeof(struct SStation));
+            stations[index]->id = atoi(id);
+            stations[index]->name = strdup(name);
+
+            insert_hash(id, index);
+            index++;
         }
     }
 

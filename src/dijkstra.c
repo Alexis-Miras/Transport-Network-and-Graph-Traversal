@@ -58,6 +58,7 @@ void dijkstra(Graphe g, int station_depart, SDijkstra* resultat){
 } 
 
 void afficher_chemin(int depart, int arrivee, SDijkstra *res, Station *stations) {
+    (void)depart; // warning
 
     if (res[arrivee]->distance == INF) {
         printf("Aucun chemin trouvé.\n");
