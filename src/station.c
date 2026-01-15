@@ -19,15 +19,6 @@ Station *init_station(char *file_name, int *nb_stations) {
         return NULL;
     }
 
-    /*
-    allocation dynamique mémoire des lignes
-
-    struct stat sb;
-    fstat(fileno(f), &sb);
-
-    char *line = malloc(sb.st_size + 1);
-    */
-
     while (fgets(line, BUF_SIZE, f)) {
         if (strncmp(line, "STATION", 7) == 0) {
 

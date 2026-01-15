@@ -28,7 +28,6 @@ void swap_deg(DegreDesStations *a, DegreDesStations *b, int *permutations) {
 
 
 void tri_par_selection(int nb, DegreDesStations* tableau, int *comparaisons, int *permutations){
-
     for (int i = 0; i < nb-1; i++) {
         int min = i;
         for (int j = i + 1; j < nb; j++) {

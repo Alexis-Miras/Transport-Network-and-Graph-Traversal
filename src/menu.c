@@ -51,11 +51,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             printf("Entrez un nom ou un id de station :\n");
             fgets(input, 256, stdin);
             input[strcspn(input, "\n")] = 0; // retirer \n et \r
-            // printf("%s", input);
 
-            // Station search = NULL;// (Station) malloc(sizeof(struct SStation));
-
-            // search->id = -1; search->name = NULL;
             if (sscanf(input, "%i", &id) == 1) {
                 idx = id;
             } else {
@@ -137,10 +133,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             afficher_chemin(depart, arrivee, resultat, stations);
 
-
-            // for (int i = 0; i < nb_stations; i++) free(resultat[i]);
             free(resultat);
-
             break;
         case 4:
             printf("Stations triées par degré\n");

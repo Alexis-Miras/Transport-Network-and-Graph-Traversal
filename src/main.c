@@ -14,26 +14,19 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
+    // Initialisation de la table de hachage
     init_hash();
 
     int nb_stations = 0;
+    // initialisation du tableau de station
     Station *stations = init_station(argv[1], &nb_stations);
 
+    // initialisation du graphe
     Graphe graph = init_graphe(stations, nb_stations);
 
     lire_edges(graph, argv[1]);
-
-    // Initialisation de la hash map
-    /*
-    for (int i = 0; i < nb_stations; i++) {
-        stations[i]->name[strcspn(stations[i]->name, "\n")] = 0;
-        insert_hash(stations[i]->name, i);
-    }
-    */
-    // print_hash_table();
-
     
-    // for (int i = 0; i < nb_stations; i++) afficher(stations[i]);;
+    // print_hash_table();
 
     // Boucle infini sur le menu jusqu'au choix 0 (quitter)
     int choix = -1;
@@ -42,6 +35,7 @@ int main(int argc, char *argv[]) {
         affichage_menu(choix, nb_stations, stations, graph);
     }
 
+    // liberation de memoire
     for (int i = 0; i < nb_stations; i++) {
         if (stations[i]) {
             if (stations[i]->name) free(stations[i]->name);
