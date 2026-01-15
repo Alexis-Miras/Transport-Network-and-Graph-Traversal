@@ -1,0 +1,11 @@
+# Réseau minimal valide
+STATION;0;Gare
+STATION;1;Centre
+STATION;2;Universite
+
+EDGE;0;1;5
+EDGE;1;0;5
+EDGE;1;2;3
+EDGE;2;1;3
+EDGE;0;2;10
+EDGE;2;0;10

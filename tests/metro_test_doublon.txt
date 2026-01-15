@@ -1,0 +1,8 @@
+# Arêtes en doublon
+STATION;0;A
+STATION;1;B
+
+EDGE;0;1;4
+EDGE;0;1;4
+EDGE;1;0;4
+EDGE;1;0;4

@@ -1,0 +1,3 @@
+# ID dupliqué
+STATION;0;A
+STATION;0;B

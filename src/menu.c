@@ -6,9 +6,7 @@
 #include "../include/hash.h"
 #include "../include/tri.h"
 #include "../include/dijkstra.h"
-
-void affichage_station(Station, int, Graphe, int);
-void affichage_menu(int, int, Station *, Graphe);
+#include "../include/menu.h"
 
 int menu() {
     int choice;
@@ -53,7 +51,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             printf("Entrez un nom ou un id de station :\n");
             fgets(input, 256, stdin);
             input[strcspn(input, "\n")] = 0; // retirer \n et \r
-            printf("%s", input);
+            // printf("%s", input);
 
             // Station search = NULL;// (Station) malloc(sizeof(struct SStation));
 
@@ -83,7 +81,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
                 break;
             }
 
-            affichage_station(stations[found_idx], nb_stations, graph, found_idx);
+            affichage_station(stations[found_idx], graph, found_idx);
             break;
         case 2:
             printf("Lister voisins station\n");
@@ -182,7 +180,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
     if (input) free(input);
 }
 
-void affichage_station(Station station, int nb_station, Graphe g, int idx) {
+void affichage_station(Station station, Graphe g, int idx) {
     if (!station) return;
 
     afficher(station);

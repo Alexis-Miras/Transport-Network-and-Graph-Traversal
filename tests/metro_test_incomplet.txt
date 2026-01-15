@@ -1,0 +1,5 @@
+# Ligne EDGE incomplète
+STATION;0;A
+STATION;1;B
+
+EDGE;0;1;

@@ -5,6 +5,6 @@
 
 int menu(void);
 void affichage_menu(int, int, Station *, Graphe);
-void affichage_station(Station, int, Graphe, int);
+void affichage_station(Station, Graphe, int);
 
 #endif
