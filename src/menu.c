@@ -138,19 +138,19 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             afficher_chemin(depart, arrivee, resultat, stations);
 
 
-            for (int i = 0; i < nb_stations; i++) free(resultat[i]);
+            // for (int i = 0; i < nb_stations; i++) free(resultat[i]);
             free(resultat);
 
             break;
         case 4:
             printf("Stations triées par degré\n");
-            DegreDesStations *tableau = malloc(nb_stations * sizeof(DegreDesStations));
+            DegreDesStations *tableau = malloc(graph->nb_stations * sizeof(DegreDesStations));
             if (!tableau) {
                 printf("Erreur allocation mémoire\n");
                 break;
             }
 
-            for (int i = 0; i < nb_stations; i++) {
+            for (int i = 0; i < graph->nb_stations; i++) {
                 tableau[i] = malloc(sizeof(struct SDegreDesStations));
                 if (!tableau[i]) {
                     printf("Erreur allocation mémoire\n");
@@ -160,22 +160,23 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             calcul_du_degre(graph, tableau);
 
-            int comparaisons = 0, permutations = 0;
-            tri_par_selection(nb_stations, tableau, &comparaisons, &permutations);
 
-            for (int i = 0; i < nb_stations; i++) {
+            int comparaisons = 0, permutations = 0;
+            tri_par_selection(graph->nb_stations, tableau, &comparaisons, &permutations);
+
+            for (int i = 0; i < graph->nb_stations; i++) {
                 int idx = tableau[i]->id_station;
-                printf("%s (degré = %i)\n",
-                    stations[idx]->name,
-                    tableau[i]->degre);
+                if (stations[idx]) printf("%s (degré = %i)\n", 
+                                    stations[idx]->name, tableau[i]->degre);
             }
 
             afficher_stats(comparaisons, permutations);
-            for (int i = 0; i < nb_stations; i++)free(tableau[i]);
+
+            for (int i = 0; i < graph->nb_stations; i++) free(tableau[i]);
             free(tableau);
             break;
         default:
-            printf("Choix invalide\n");
+            printf("Choix invalide, entrez une valeur comprise entre 0 et 4\n");
     }
     if (input) free(input);
 }

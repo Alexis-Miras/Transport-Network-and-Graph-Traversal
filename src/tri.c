@@ -28,16 +28,16 @@ void swap_deg(DegreDesStations *a, DegreDesStations *b, int *permutations) {
 
 
 void tri_par_selection(int nb, DegreDesStations* tableau, int *comparaisons, int *permutations){
-    (void)comparaisons; // warning
 
     for (int i = 0; i < nb-1; i++) {
         int min = i;
         for (int j = i + 1; j < nb; j++) {
+            (*comparaisons)++;
             if (tableau[j]->degre < tableau[min]->degre) {
                 min = j;
             }
-            if (min != i) swap_deg(&tableau[i], &tableau[min], permutations);
         }
+        if (min != i) swap_deg(&tableau[i], &tableau[min], permutations);
     }
 }
 

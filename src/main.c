@@ -43,8 +43,10 @@ int main(int argc, char *argv[]) {
     }
 
     for (int i = 0; i < nb_stations; i++) {
-        free(stations[i]->name);
-        free(stations[i]);
+        if (stations[i]) {
+            if (stations[i]->name) free(stations[i]->name);
+            free(stations[i]);
+        }
     }
     free(stations);
 
