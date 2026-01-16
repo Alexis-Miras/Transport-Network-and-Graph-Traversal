@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
     lire_edges(graph, argv[1]);
     
-    // print_hash_table();
+    // print_hash();
 
     // Boucle infini sur le menu jusqu'au choix 0 (quitter)
     int choix = -1;

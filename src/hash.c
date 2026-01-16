@@ -55,7 +55,7 @@ void free_hash() {
 }
 
 // affiche toute la table de hachage
-void print_hash_table() {
+void print_hash() {
     for (int i = 0; i < TABLE_SIZE; i++) {
         HashMap node = hash_table[i];
         if (node) {

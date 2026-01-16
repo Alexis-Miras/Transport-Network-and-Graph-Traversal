@@ -16,6 +16,6 @@ void init_hash();
 void insert_hash(char *, int);
 int search_hash(char *);
 void free_hash();
-void print_hash_table();
+void print_hash();
 
 #endif
