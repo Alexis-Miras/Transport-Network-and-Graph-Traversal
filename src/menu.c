@@ -10,6 +10,7 @@
 #include "../include/dijkstra.h"
 #include "../include/menu.h"
 
+// affichage du menu
 int menu() {
     int choice;
 
@@ -61,7 +62,8 @@ int saisie_clavier(char *input) {
     return idx;
 }
 
-void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph) {
+// gestion des E/S et du menu
+void gestion_menu(int choix, int nb_stations, Station *stations, Graphe graph) {
     char *input = malloc(sizeof(char)*256);
     int idx = -1;
     switch (choix) {

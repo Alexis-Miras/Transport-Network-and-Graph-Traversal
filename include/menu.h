@@ -7,6 +7,6 @@
 
 int menu(void);
 int saisie_clavier(char *);
-void affichage_menu(int, int, Station *, Graphe);
+void gestion_menu(int, int, Station *, Graphe);
 
 #endif

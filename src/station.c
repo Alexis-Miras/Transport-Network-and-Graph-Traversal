@@ -48,6 +48,8 @@ Station *init_station(char *file_name, int *nb_stations) {
     rewind(f);
 
     int index = 0;
+    // boucle sur toutes les lignes du fichier pour la création du tableau de station
+    // et l'insertion dans la table de hachage
     while (fgets(line, BUF_SIZE, f)) {
         if (line[0] == '#' || strlen(line) <= 1) continue;
         if (strncmp(line, "STATION", 7) == 0) {

@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     int choix = -1;
     while (choix != 0) {
         choix = menu();
-        affichage_menu(choix, nb_stations, stations, graph);
+        gestion_menu(choix, nb_stations, stations, graph);
     }
 
     // liberation de memoire du tableau de station
