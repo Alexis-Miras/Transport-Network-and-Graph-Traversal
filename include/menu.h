@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #ifndef MENU_H
 #define MENU_H
 

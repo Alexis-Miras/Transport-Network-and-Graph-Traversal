@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include "../include/hash.h"
 #include <stdlib.h>
 #include <string.h>

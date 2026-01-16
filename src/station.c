@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +11,7 @@ void afficher(Station s) {
     printf("ID : %i, Nom : %s \n", s->id, s->name);
 }
 
+// initialiser un tableau de station
 Station *init_station(char *file_name, int *nb_stations) {
 
     char line[BUF_SIZE];
@@ -19,6 +22,7 @@ Station *init_station(char *file_name, int *nb_stations) {
         return NULL;
     }
 
+    // boucle pour la gestion d'erreur dans le fichier et comptage du nombre de station
     while (fgets(line, BUF_SIZE, f)) {
         if (strncmp(line, "STATION", 7) == 0) {
 

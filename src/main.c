@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/station.h"
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
         affichage_menu(choix, nb_stations, stations, graph);
     }
 
-    // liberation de memoire
+    // liberation de memoire du tableau de station
     for (int i = 0; i < nb_stations; i++) {
         if (stations[i]) {
             if (stations[i]->name) free(stations[i]->name);

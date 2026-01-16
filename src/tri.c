@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include <stdio.h>
 #include "../include/graphe.h"
 #include "../include/tri.h"
@@ -19,6 +21,8 @@ void calcul_du_degre(Graphe g, DegreDesStations* tableau){
     }
 } 
 
+// fonction d'inversion de deux pointeurs "DegreDesStations"
+// utilisée dans certaines fonctions de tri
 void swap_deg(DegreDesStations *a, DegreDesStations *b, int *permutations) {
     DegreDesStations c = *a;
     *a = *b;
@@ -41,10 +45,11 @@ void tri_par_selection(int nb, DegreDesStations* tableau, int *comparaisons, int
 }
 
 void tri_par_insertion(int nb, DegreDesStations* tableau, int *comparaisons, int *permutations){
-    for (int i = 1; i < nb-1; i++) {
+    for (int i = 1; i < nb; i++) {
         DegreDesStations clef = tableau[i];
         int j = i - 1;
-        while (j >= 0 && tableau[j] > clef) { 
+        // décalage tant que le degré est supérieur
+        while (j >= 0 && tableau[j]->degre > clef->degre) { 
             (*comparaisons)++;
             tableau[j+1] = tableau[j];
             (*permutations)++;

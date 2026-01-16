@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #ifndef DIJKSTRA_H
 #define DIJKSTRA_H
 

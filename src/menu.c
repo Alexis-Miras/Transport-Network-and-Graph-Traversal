@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -169,6 +171,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             free(tableau);
             break;
         default:
+            // cas non utilisé mais laissé par sécurité
             printf("Choix invalide, entrez une valeur comprise entre 0 et 4\n");
     }
     if (input) free(input);

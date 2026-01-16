@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #ifndef HASH_H
 #define HASH_H
 

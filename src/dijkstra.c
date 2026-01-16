@@ -1,3 +1,5 @@
+// Auteur : Adam Zekari - Alexis Miras
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/graphe.h"
