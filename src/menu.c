@@ -42,62 +42,49 @@ int menu() {
     }
 }
 
+// gestion de la saisi clavier, transformation de char * en int (nom --> id)
+int saisi_clavier(char *input) {
+    int idx = -1, id;
+    fgets(input, 256, stdin);
+    input[strcspn(input, "\n")] = 0; // retirer \n et \r
+
+    if (sscanf(input, "%i", &id) == 1) {
+        idx = id;
+    } else {
+        idx = search_hash(input);
+    }
+
+    if (idx == -1) {
+        printf("Nom ou ID invalide\n");
+        return -1;
+    }
+    return idx;
+}
+
 void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph) {
     char *input = malloc(sizeof(char)*256);
-    int id;
     int idx = -1;
     switch (choix) {
         case 0:
             break;
         case 1:
             printf("Entrez un nom ou un id de station :\n");
-            fgets(input, 256, stdin);
-            input[strcspn(input, "\n")] = 0; // retirer \n et \r
 
-            if (sscanf(input, "%i", &id) == 1) {
-                idx = id;
-            } else {
-                idx = search_hash(input);
-            }
+            idx = saisi_clavier(input);
 
-            if (idx == -1) {
-                printf("Nom ou ID invalide\n");
-                break;
-            }
-
-            // search = NULL;
-            int found_idx = -1;
-            for (int i = 0; i < nb_stations; i++) {
-                if (stations[i]->id == idx) {
-                    found_idx = i; // IMPORTANT : idx devient l’index réel
-                    break;
-                }
-            }
-
-            if (found_idx == -1) {
-                printf("Station introuvable\n");
-                break;
-            }
-
-            affichage_station(stations[found_idx], graph, found_idx);
+            affichage_station(stations[idx], graph, idx);
             break;
         case 2:
             printf("Lister voisins station\n");
             printf("Entrez un nom ou un id de station :\n");
-            fgets(input, 256, stdin);
-            input[strcspn(input, "\n")] = 0; // enlever le '\n'
 
-            if (sscanf(input, "%i", &id) == 1) {
-                idx = id;
-            } else {
-                idx = search_hash(input);
-            }
+            idx = saisi_clavier(input);
 
             if (idx != -1) {
-                Arc a = graph->list_adj[id];
-                printf("Voisins de %s :\n", stations[id]->name);
+                Arc a = graph->list_adj[idx];
+                printf("Voisins de %s :\n", stations[idx]->name);
                 while (a) {
-                    printf("  %d - %s (temps: %d)\n", a->destination,
+                    printf("  %i - %s (temps: %i)\n", a->destination,
                     stations[a->destination]->name, a->temps);
                 a = a->next_destination;
                 }
@@ -105,7 +92,6 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             break;
         case 3:
             printf("Chemin minimal\n");
-            char input1[256], input2[256];
             int depart, arrivee;
             SDijkstra *resultat = malloc(nb_stations * sizeof(SDijkstra));
             if (!resultat) {
@@ -114,22 +100,10 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             }
 
             printf("Station de départ (nom ou id) :\n");
-            fgets(input1, 256, stdin);
-            input1[strcspn(input1, "\n")] = 0;
+            depart = saisi_clavier(input);
 
             printf("Station d'arrivée (nom ou id) :\n");
-            fgets(input2, 256, stdin);
-            input2[strcspn(input2, "\n")] = 0;
-
-            if (sscanf(input1, "%d", &depart) != 1) depart = search_hash(input1);
-
-            if (sscanf(input2, "%d", &arrivee) != 1) arrivee = search_hash(input2);
-
-            if (depart == -1 || arrivee == -1) {
-                printf("Station invalide.\n");
-                free(resultat);
-                break;
-            }
+            arrivee = saisi_clavier(input);
 
             dijkstra(graph, depart, resultat);
 
@@ -137,7 +111,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             free(resultat);
             break;
-        case 4:
+        case 4: 
             printf("Stations triées par degré\n");
             DegreDesStations *tableau = malloc(graph->nb_stations * sizeof(DegreDesStations));
             if (!tableau) {

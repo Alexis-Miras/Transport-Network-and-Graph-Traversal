@@ -44,6 +44,7 @@ Station *init_station(char *file_name, int *nb_stations) {
         return NULL;
     }
 
+    // retour au début du fichier
     rewind(f);
 
     int index = 0;
