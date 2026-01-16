@@ -8,6 +8,5 @@
 int menu(void);
 int saisie_clavier(char *);
 void affichage_menu(int, int, Station *, Graphe);
-void affichage_station(Station, Graphe, int);
 
 #endif

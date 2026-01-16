@@ -24,5 +24,7 @@ void graphe_add_arc(Graphe g, int source, int destination, int temps); //On va a
 void free_graphe(Graphe g); //On va libérer la mémoire allouée au graphe avec free
 
 void lire_edges(Graphe g, char *file_name);
+void affichage_deg_sortant(Graphe, int);
+void affichage_nb_voisins(Station *, Graphe, int);
 
 #endif 

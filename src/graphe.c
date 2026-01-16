@@ -71,3 +71,24 @@ void lire_edges(Graphe g, char *file_name) {
 
     fclose(f);
 }
+
+void affichage_nb_voisins(Station *stations, Graphe g, int idx) {
+    if (idx != -1) return;
+    Arc a = g->list_adj[idx];
+    printf("Voisins de %s :\n", stations[idx]->name);
+    while (a) {
+        printf(" %i - %s (temps: %i)\n", a->destination, stations[a->destination]->name, a->temps);
+        a = a->next_destination;
+    }
+}
+
+void affichage_deg_sortant(Graphe g, int idx) {
+    if (!g) return;
+    int deg = 0;
+    Arc arc = g->list_adj[idx];
+    while (arc != NULL) {
+        deg++;
+        arc = arc->next_destination;
+    }
+    printf("Nombre de voisins sortants : %i \n", deg);
+}

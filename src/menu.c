@@ -72,38 +72,28 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             idx = saisie_clavier(input);
 
-            affichage_station(stations[idx], graph, idx);
+            afficher_station(stations[idx]);
+            affichage_deg_sortant(graph, idx);
             break;
         case 2:
-            printf("Lister voisins station\n");
             printf("Entrez un nom ou un id de station :\n");
 
             idx = saisie_clavier(input);
 
-            if (idx != -1) {
-                Arc a = graph->list_adj[idx];
-                printf("Voisins de %s :\n", stations[idx]->name);
-                while (a) {
-                    printf("  %i - %s (temps: %i)\n", a->destination,
-                    stations[a->destination]->name, a->temps);
-                a = a->next_destination;
-                }
-            }
+            affichage_nb_voisins(stations, graph, idx);
             break;
         case 3:
-            printf("Chemin minimal\n");
-            int depart, arrivee;
+            printf("Station de départ (nom ou id) :\n");
+            int depart = saisie_clavier(input);
+
+            printf("Station d'arrivée (nom ou id) :\n");
+            int arrivee = saisie_clavier(input);
+
             SDijkstra *resultat = malloc(nb_stations * sizeof(SDijkstra));
             if (!resultat) {
                 printf("Erreur allocation mémoire\n");
                 break;
             }
-
-            printf("Station de départ (nom ou id) :\n");
-            depart = saisie_clavier(input);
-
-            printf("Station d'arrivée (nom ou id) :\n");
-            arrivee = saisie_clavier(input);
 
             dijkstra(graph, depart, resultat);
 
@@ -111,8 +101,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             free(resultat);
             break;
-        case 4: 
-            printf("Stations triées par degré\n");
+        case 4: {
             DegreDesStations *tableau = malloc(graph->nb_stations * sizeof(DegreDesStations));
             if (!tableau) {
                 printf("Erreur allocation mémoire\n");
@@ -129,38 +118,26 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
 
             calcul_du_degre(graph, tableau);
 
-
             int comparaisons = 0, permutations = 0;
-            tri_par_selection(graph->nb_stations, tableau, &comparaisons, &permutations);
+            // tri_par_selection(graph->nb_stations, tableau, &comparaisons, &permutations);
+            // Nombre de comparaisons : 8001, Nombre de permutations : 119
 
-            for (int i = 0; i < graph->nb_stations; i++) {
-                int idx = tableau[i]->id_station;
-                if (stations[idx]) printf("%s (degré = %i)\n", 
-                                    stations[idx]->name, tableau[i]->degre);
-            }
+            // tri_par_insertion(graph->nb_stations, tableau, &comparaisons, &permutations);
+            // Nombre de comparaisons : 1838, Nombre de permutations : 1838
 
+            tri_rapide(graph->nb_stations, tableau, &comparaisons, &permutations);
+            // Nombre de comparaisons : 305, Nombre de permutations : 432
+
+            affichage_deg_tri(stations, graph, tableau);
             afficher_stats(comparaisons, permutations);
 
             for (int i = 0; i < graph->nb_stations; i++) free(tableau[i]);
             free(tableau);
             break;
+        }
         default:
             // cas non utilisé mais laissé par sécurité
             printf("Choix invalide, entrez une valeur comprise entre 0 et 4\n");
     }
     if (input) free(input);
-}
-
-void affichage_station(Station station, Graphe g, int idx) {
-    if (!station) return;
-
-    afficher(station);
-
-    int deg = 0;
-    Arc arc = g->list_adj[idx];
-    while (arc != NULL) {
-        deg++;
-        arc = arc->next_destination;
-    }
-    printf("Nombre de voisins sortants : %i \n", deg);
 }

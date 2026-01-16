@@ -7,7 +7,7 @@
 #include "../include/hash.h"
 
 
-void afficher(Station s) {
+void afficher_station(Station s) {
     printf("ID : %i, Nom : %s \n", s->id, s->name);
 }
 

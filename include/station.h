@@ -11,7 +11,7 @@ struct SStation {
 };
 typedef struct SStation* Station;
 
-void afficher(Station s);
+void afficher_station(Station s);
 Station *init_station(char *file_name, int *nb_stations);
 
 #endif 

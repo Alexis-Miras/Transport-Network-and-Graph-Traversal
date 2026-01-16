@@ -91,3 +91,11 @@ void afficher_stats(int comparaisons, int permutations) {
     printf("Nombre de comparaisons : %i\n", comparaisons);
     printf("Nombre de permutations : %i\n", permutations);
 }
+
+void affichage_deg_tri(Station *stations, Graphe g, DegreDesStations *t) {
+    for (int i = 0; i < g->nb_stations; i++) {
+        int idx = t[i]->id_station;
+        if (stations[idx]) printf("%s (degré = %i)\n", stations[idx]->name, t[i]->degre);
+    }
+}
+

@@ -21,5 +21,6 @@ void tri_rapide(int nb, DegreDesStations* tableau, int *comparaisons, int *permu
 void tri_rapide_rec(DegreDesStations *, int, int, int *, int *);
 int partition(DegreDesStations *, int, int, int *, int *);
 void afficher_stats(int, int);
+void affichage_deg_tri(Station *, Graphe, DegreDesStations *);
 
 #endif
