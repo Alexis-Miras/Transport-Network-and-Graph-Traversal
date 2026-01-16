@@ -43,7 +43,7 @@ int menu() {
 }
 
 // gestion de la saisi clavier, transformation de char * en int (nom --> id)
-int saisi_clavier(char *input) {
+int saisie_clavier(char *input) {
     int idx = -1, id;
     fgets(input, 256, stdin);
     input[strcspn(input, "\n")] = 0; // retirer \n et \r
@@ -70,7 +70,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
         case 1:
             printf("Entrez un nom ou un id de station :\n");
 
-            idx = saisi_clavier(input);
+            idx = saisie_clavier(input);
 
             affichage_station(stations[idx], graph, idx);
             break;
@@ -78,7 +78,7 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             printf("Lister voisins station\n");
             printf("Entrez un nom ou un id de station :\n");
 
-            idx = saisi_clavier(input);
+            idx = saisie_clavier(input);
 
             if (idx != -1) {
                 Arc a = graph->list_adj[idx];
@@ -100,10 +100,10 @@ void affichage_menu(int choix, int nb_stations, Station *stations, Graphe graph)
             }
 
             printf("Station de départ (nom ou id) :\n");
-            depart = saisi_clavier(input);
+            depart = saisie_clavier(input);
 
             printf("Station d'arrivée (nom ou id) :\n");
-            arrivee = saisi_clavier(input);
+            arrivee = saisie_clavier(input);
 
             dijkstra(graph, depart, resultat);
 
